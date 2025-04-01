@@ -57,7 +57,6 @@ namespace Diagnostico4
                                 NroCat[i] = Datos.Nro;
                                 break;
                             }
-
                         }
                         else
                         {
@@ -68,17 +67,16 @@ namespace Diagnostico4
                         }
                     }
                 }
-                Categorias.Add(Datos.Categoria);
                 if (Datos.Tiempo < MejorTiempo) 
                 {
                     MejorTiempo = Datos.Tiempo;
                 }
                 Console.Clear();
             } while (Datos.Nro != 0);
-            Console.WriteLine("El mejor tiempo fue: " + MejorTiempo);
-            for (int i = 1; i < Categorias.Count; i++)
+            Console.WriteLine("El mejor tiempo fue: " + MejorTiempo); Console.ReadKey();
+            foreach (int i in Categorias)
             {
-                Console.WriteLine("El mejor tiempo en la Categoria " + Categorias[i]);
+                Console.WriteLine("El mejor tiempo en la Categoria " + Categorias[i] + "Fue: " + TiempoCat[i] + "Por el Numero: " + NroCat[i]);
             }
             Console.ReadKey();
         }
