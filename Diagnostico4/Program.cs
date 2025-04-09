@@ -28,18 +28,16 @@ namespace Diagnostico4
                 Console.WriteLine("Ingrese el Tiempo en segundos");
                 Tiempo = int.Parse(Console.ReadLine());
             }
-            
         }
     }
     internal class Program
     {
         static void Main(string[] args)
         {
-
+            bool PV = true;
             List<int> Categorias = new List<int>();
             List<int> TiempoCat = new List<int>();
             List<int> NroCat = new List<int>();
-
             int MejorTiempo = 99999;
             Datos Datos = new Datos();
             do
@@ -47,37 +45,47 @@ namespace Diagnostico4
                 Datos.CargarDatos();
                 if (Datos.Nro != 0)
                 {
-                    for (int i = 1; i < Categorias.Count; i++)
+                    if (PV == true) 
                     {
-                        if (Datos.Categoria == Categorias[i])
+                        Categorias.Add(Datos.Categoria);
+                        TiempoCat.Add(Datos.Tiempo);
+                        NroCat.Add(Datos.Nro);
+                        PV = false;
+                    }
+                    else
+	                {
+                        for (int i = 0; i < Categorias.Count(); i++)
                         {
-                            if (Datos.Tiempo < TiempoCat[i])
+                            if (Datos.Categoria == Categorias[i])
                             {
-                                TiempoCat[i] = Datos.Tiempo;
-                                NroCat[i] = Datos.Nro;
+                                if (Datos.Tiempo < TiempoCat[i])
+                                {
+                                    TiempoCat[i] = Datos.Tiempo;
+                                    NroCat[i] = Datos.Nro;
+                                    break;
+                                }
+                            }
+                            bool E = Categorias.Contains(Datos.Categoria);
+                            if (E == false)
+                            {
+                                Categorias.Add(Datos.Categoria);
+                                TiempoCat.Add(Datos.Tiempo);
                                 break;
                             }
                         }
-                        else
+                        if (Datos.Tiempo < MejorTiempo) 
                         {
-                            Categorias.Add(Datos.Categoria);
-                            TiempoCat.Add(Datos.Tiempo);
-                            NroCat.Add(Datos.Nro);
-                            break;
+                            MejorTiempo = Datos.Tiempo;
                         }
-                    }
-                }
-                if (Datos.Tiempo < MejorTiempo) 
-                {
-                    MejorTiempo = Datos.Tiempo;
+	                }
                 }
                 Console.Clear();
             } while (Datos.Nro != 0);
-            Console.WriteLine("El mejor tiempo fue: " + MejorTiempo); Console.ReadKey();
-            foreach (int i in Categorias)
-            {
-                Console.WriteLine("El mejor tiempo en la Categoria " + Categorias[i] + "Fue: " + TiempoCat[i] + "Por el Numero: " + NroCat[i]);
-            }
+            Console.WriteLine("El mejor tiempo fue: " + MejorTiempo);
+            for (int i = 0; i < Categorias.Count(); i++)
+			{
+                Console.WriteLine("El mejor tiempo en la Categoria " + Categorias[i] + " Fue: " + TiempoCat[i] + " Por el Numero: " + NroCat[i]);
+			}
             Console.ReadKey();
         }
     }
